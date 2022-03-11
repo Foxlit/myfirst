@@ -6,8 +6,13 @@
 
     {% if latest_posts_list %}
 
-        {% for a in latest_articles_list %}
-            <a href="{% url 'posts:detail' p.id %}">{{p.post_title}} </a>
+        {% for p in latest_posts_list %}
+<h3>
+            <a href="{% url 'posts:detail' p.id %}"> {{ p.post_title }}</a><br>
+</h3>
+{{ p.preview }}<br>
+Рейтинг: {{p.rating}}<br><br>
+
     {% endfor %}
 
     {% else %}

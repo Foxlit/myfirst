@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %} {{article.article_title}} {% endblock %}
+{% block title %} {{posts.posts_title}} {% endblock %}
 
 {% block content %}
 
-<h2>{{article.article_title}}</h2>
+<h2>{{posts.post_title}}</h2>
 
-<p>{{article.article_text}}</p>
+<p>{{posts.post_text}}</p>
 
-<em>{{article.pub_date}}</em>
+<em>{{posts.pub_date}}</em>
 
-{% if article.was_published_recently %}
+{% if posts.was_published_recently %}
 НОВАЯ СТАТЬЯ
 {% endif %}
 
@@ -30,7 +30,7 @@
 
 <hr>
 
-<form action="{% url 'articles:leave_comment' article.id %}" method="POST">
+<form action="{% url 'posts:leave_comment' posts.id %}" method="POST">
 
     {% csrf_token %}
 

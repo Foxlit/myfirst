@@ -7,10 +7,18 @@ from django.contrib.auth.models import User
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
+    author_name = models.CharField('Имя', max_length=50)
 
     def update_rating(self, new_rating):
         self.rating = new_rating
         self.save()
+
+    def __str__(self):
+        return self.author_name
+
+    class Meta:
+        verbose_name = 'Автор'
+        verbose_name_plural = 'Авторы'
 
 
 class Category(models.Model):
@@ -28,7 +36,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, default=None)
     post_type = models.CharField(max_length=1, choices=POST_TYPE, default=article)
     cats = models.ManyToManyField(Category, through='PostCategory')
-    post_title = models.CharField('Название', max_length=200)
+    post_title = models.CharField('Название', max_length=100)
     post_text = models.TextField('Текст')
     pub_date = models.DateTimeField('Дата публикации')
     rating = models.IntegerField(default=0)
@@ -42,8 +50,8 @@ class Post(models.Model):
         self.save()
 
     def preview(self):
-        size = 124 if len(self.text) > 124 else len(self.text)
-        return self.text[:size] + '...'
+        size = 50 if len(self.post_text) > 50 else len(self.post_text)
+        return self.post_text[:size] + '...'
 
     def __str__(self):
         return self.post_title
@@ -82,3 +90,7 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+
+
+

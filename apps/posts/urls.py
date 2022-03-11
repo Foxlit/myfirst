@@ -5,8 +5,8 @@ from .views import PostsList  # импортируем наше представ
 app_name = 'posts'
 urlpatterns = [
  path('', views.index, name='index'),
- path('<int:article_id>/', views.detail, name='detail'),
- path('<int:article_id>/leave_comment', views.leave_comment, name='leave_comment'),
+ path('<int:posts_id>/', views.detail, name='detail'),
+ path('<int:posts_id>/leave_comment', views.leave_comment, name='leave_comment'),
  path('', PostsList.as_view()),
 
 ]
