@@ -1,14 +1,33 @@
 from django.shortcuts import render
-from .models import Post
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView
+from django.views import View
+
+from .models import Post, Category  # Дополнительно импортируем категорию, чтобы пользователь мог её выбрать
 
 
 class PostsList(ListView):
-    model = Post  # указываем модель, объекты которой мы будем выводить
-    template_name = 'posts.html'
+    model = Post
+    template_name = 'list.html'
     context_object_name = 'posts'
+    queryset = Post.objects.order_by('-id')
+
+
+class Posts(ListView):
+    model = Post
+    template_name = 'list.html'
+    context_object_name = 'posts'
+    ordering = ['-pub_date']
+
+    def post(self, request, *args, **kwargs):
+        # берём значения для нового товара из POST-запроса, отправленного на сервер
+        name = request.POST['name']
+        category_id = request.POST['category']
+
+        post = Post(name=name, category_id=category_id)
+        post.save()
+        return super().filter(request, *args, **kwargs)
 
 
 def index(request):
@@ -18,7 +37,7 @@ def index(request):
 
 def detail(request, posts_id):
     try:
-        p = Post.objects.get(id=posts_id)
+        p = Post.objects.filter(id=posts_id)
     except:
         raise Http404("Статья не найдена")
 
@@ -29,7 +48,7 @@ def detail(request, posts_id):
 
 def leave_comment(request, posts_id):
     try:
-        p = Post.objects.get(id=posts_id)
+        p = Post.objects.filter(id=posts_id)
     except:
         raise Http404("Статья не найдена")
 

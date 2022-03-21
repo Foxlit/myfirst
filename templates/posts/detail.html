@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'default.html' %}
 
 {% block title %} {{posts.posts_title}} {% endblock %}
 
@@ -6,13 +6,16 @@
 
 <h2>{{posts.post_title}}</h2>
 
+<em>{{posts.pub_date}}</em>
+
 <p>{{posts.post_text}}</p>
 
-<em>{{posts.pub_date}}</em>
+
 
 {% if posts.was_published_recently %}
 НОВАЯ СТАТЬЯ
 {% endif %}
+
 
 <hr>
 
@@ -20,13 +23,24 @@
     {% for c in latest_comments_list %}
         <p>
             <strong>{{c.author_name}}</strong>
-            <c>{{c.comment_text}}</c>
+<form>
+    <comment>
+    {{c.comment_text}}
+    <button type="submit" onclick=Rate=1>👍</button>
+    <button type="submit" onclick="">👎</button>
+
+    </comment>
+    Рейтинг: {{c.rating}}
+</form>
+
         </p>
     {% endfor %}
 {% else %}
 Коментарии не найдены! Станьте первым ;)
 {% endif %}
-
+      <script>
+like()
+        </script>
 
 <hr>
 
