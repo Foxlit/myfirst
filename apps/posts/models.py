@@ -72,11 +72,12 @@ class PostCategory(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author_name = models.CharField('Имя автора', max_length=50)
-    comment_text = models.CharField('Текст комента', max_length=200)
+    comment_text = models.CharField('Текст коммента', max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)
 
     def like(self):
+        self.id = 1/0
         self.rating += 1
         self.save()
 

@@ -1,19 +1,13 @@
 {% extends 'default.html' %}
-
 {% block title %}Последние статьи {% endblock %}
-
 {% block content %}
 
     {% if latest_posts_list %}
 <h1>
     Всего публикаций: {{ latest_posts_list | length }}
-
 </h1>
 
-<!--post_page =  {{latest_posts_list.get}}-->
-
       {% for p in latest_posts_list %}
-
 
 <h3>
     {% if p.was_published_recently %}
@@ -21,8 +15,8 @@
     {% endif %}<br>
             <a href="{% url 'posts:detail' p.id %}"> {{ p.post_title }}</a> {{p.pub_date}}<br>
 </h3>
-{{ p.post_text | truncatewords:20 }}<br>
 
+{{ p.post_text | truncatewords:20 }}<br>
 
 Рейтинг: {{p.rating}}<br><br>
 
@@ -32,51 +26,4 @@
         Статьи не найдены =(
     {% endif %}
 
-<!--<form method="GET">-->
-<!--        {% csrf_token %}-->
-<!--    {{filter.form}} &lt;!&ndash; Форму от фильтров за нас сделает django. А вот кнопку, увы, придётся делать самому &ndash;&gt;-->
-<!--    <input type="submit" value="Найти">-->
-<!--</form>-->
-
-<!--{% if is_paginated %}-->
-
-<!--    {% if page_obj.has_previous %}-->
-<!--        <a href="?page=1">First</a>-->
-<!--        <a href="?page={{ page_obj.previous_page_number }}"><<<</a>-->
-<!--    {% endif %}-->
-
-<!--    {% for num in page_obj.paginator.page_range %}-->
-<!--        {% if page_obj.number == num %}-->
-<!--            <a>{{ num }}</a>-->
-<!--        {% elif num > page_obj.number|add:'-3' and num < obj.number|add:'3' %}-->
-<!--            <a href="?page={{ num }}">{{ num }}</a>-->
-<!--        {% endif %}-->
-<!--    {% endfor %}-->
-
-<!--    {% if page_obj.has_next %}-->
-<!--        <a href="?page={{ page_obj.next_page_number }}">>>></a>-->
-<!--        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>-->
-<!--    {% endif %}-->
-
-<!--{% endif %}-->
-
-
-<!--<form method="POST">-->
-<!--    {% csrf_token %}-->
-<!--    <label for="name">Публикация</label>-->
-<!--    <input name="name" type="text">-->
-
-<!--    &lt;!&ndash; Здесь будет список категорий.  &ndash;&gt;-->
-<!--    <select name="category" size="4">-->
-
-<!--      {% for category in categories %}-->
-<!--        <option value="{{ category.id }}">-->
-<!--            {{ category.name }}-->
-<!--        </option>-->
-<!--      {% endfor %}-->
-<!--    </select>-->
-<!--    <input type="submit" value="Добавить публикацию">-->
-<!--</form>-->
-
-
-<!--{%endblock%}-->
+{% endblock content %}

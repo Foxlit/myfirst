@@ -21,36 +21,37 @@
 
 {% if latest_comments_list %}
     {% for c in latest_comments_list %}
-        <p>
-            <strong>{{c.author_name}}</strong>
-<form>
-    <comment>
-    {{c.comment_text}}
-    <button type="submit" onclick=Rate=1>👍</button>
-    <button type="submit" onclick="">👎</button>
 
-    </comment>
-    Рейтинг: {{c.rating}}
-</form>
+<comment>
+    <strong>{{c.author_name}}</strong>
+    {{ c.comment_text }} {{c.rating}} {{c.id}}
+    <form  action="{% url 'posts:like'%}" method="post">
+      <button type="submit">👍</button>
 
-        </p>
+    {% csrf_token %}
+    </form>
+            <form action="{% url 'posts:dislike'%}" method="post">
+        {% csrf_token %}
+
+        <button type="submit">👎</button>
+        </form>
+
+</comment>
+
+
     {% endfor %}
 {% else %}
 Коментарии не найдены! Станьте первым ;)
 {% endif %}
-      <script>
-like()
-        </script>
 
 <hr>
 
-<form action="{% url 'posts:leave_comment' posts.id %}" method="POST">
+<form action="{% url 'posts:create_comment' posts.id %}" method="POST">
 
     {% csrf_token %}
 
     <input type="text" required placeholder="Ваше имя" name="name"><br>
     <textarea name="text" required="" placeholder="Текст комментария" cols="30" rows="10"></textarea><br>
-
     <button type="submit">Оставить комментарий</button>
 </form>
 
